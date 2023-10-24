@@ -109,28 +109,31 @@ const Home = () => {
                         <button onClick={handleSort}>Sort by Type</button>
                     </div>
                     
-                    {data && (
-                        <table style={{margin: 'auto'}}>
-                        <thead>
-                            <tr>
-                            <th>Name</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th>Type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((item) => (
-                            <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.city}</td>
-                                <td>{item.state}</td>
-                                <td>{item.brewery_type}</td>
-                            </tr>
-                            ))}
-                        </tbody>
-                        </table>
-                    )}
+                    <div className="table-container">
+                        {data && (
+                            <table style={{margin: 'auto'}}>
+                            <thead>
+                                <tr>
+                                <th>Name</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.map((item) => (
+                                <tr key={item.id}>
+                                    <td>{item.name}</td>
+                                    <td>{item.city}</td>
+                                    <td>{item.state}</td>
+                                    <td>{item.brewery_type}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                            </table>
+                        )}
+                    </div>
+                    
                 
                 </div>
                 <div className="graphics-container">
