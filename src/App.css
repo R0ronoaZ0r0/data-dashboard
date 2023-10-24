@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+.content{
+  display: flex;
+  justify-content: space-between;
+}
+
 .stats{
   border: 1px solid #ccc;
   margin: 1rem;
@@ -25,6 +30,11 @@
   justify-content: space-evenly;  
   padding: 1rem;
 }
+
+.graphics-container{
+  padding-top: 13rem;
+}
+
 
 .logo {
   height: 6em;

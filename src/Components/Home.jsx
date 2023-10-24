@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import Graphics from './Graphics';
 
 const Home = () => {
     const [data, setData] = useState(null);
@@ -55,80 +56,89 @@ const Home = () => {
 
     return (
         <div>
-        <h1>Brewery Data</h1>
+            <h1>Brewery Data</h1>
 
-        <div className='stats-container'>
-            <div className='stats'>
-            Total Number of Breweries: 8211
+            <div className='stats-container'>
+                <div className='stats'>
+                Total Number of Breweries: 8211
+                </div>
+                <div className='stats'>
+                Number of Breweries based on your filter: {filterCount}
+                </div>
+                <div className='stats'>
+                Total Number of Closed Breweries: {closedCount}
+                </div>
             </div>
-            <div className='stats'>
-            Number of Breweries based on your filter: {filterCount}
-            </div>
-            <div className='stats'>
-            Total Number of Closed Breweries: {closedCount}
-            </div>
-        </div>
 
-        <div className='search-container'>
-            <form onSubmit={handleOnSubmit}>
-                <input 
+            <div className="content">
+                <div className="content-container">
+                    <div className='search-container'>
+                        <form onSubmit={handleOnSubmit}>
+                            <input 
+                            
+                                type="text" 
+                                value={answer}
+                                onChange={(e) => setAnswer(e.target.value)}
+                                placeholder='search by name'
+                            />
+                            
+                            <button type="submit">submit</button>
+                        </form>
+                    </div>
+
+                    <div className='filter-container'>
+                        <form onSubmit={handleOnSelect}>
+                        <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
+                            <option value=''>Filter by type</option>
+                            <option value='micro'>micro</option>
+                            <option value='nano'>nano</option>
+                            <option value='regional'>regional</option>
+                            <option value='brewpub'>brewpub</option>
+                            <option value='large'>large</option>
+                            <option value='planning'>planning</option>
+                            <option value='bar'>bar</option>
+                            <option value='contract'>contract</option>
+                            <option value='proprietor'>proprietor</option>
+                            <option value='closed'>closed</option>
+                        </select>
+                        <button type='submit'>filter</button>
+                        </form>
+                    </div>
+
+                    <div className='sort-button'>
+                        <button onClick={handleSort}>Sort by Type</button>
+                    </div>
+                    
+                    {data && (
+                        <table style={{margin: 'auto'}}>
+                        <thead>
+                            <tr>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((item) => (
+                            <tr key={item.id}>
+                                <td>{item.name}</td>
+                                <td>{item.city}</td>
+                                <td>{item.state}</td>
+                                <td>{item.brewery_type}</td>
+                            </tr>
+                            ))}
+                        </tbody>
+                        </table>
+                    )}
                 
-                    type="text" 
-                    value={answer}
-                    onChange={(e) => setAnswer(e.target.value)}
-                    placeholder='search by name'
-                />
-                
-                <button type="submit">submit</button>
-            </form>
-        </div>
-
-        <div className='filter-container'>
-            <form onSubmit={handleOnSelect}>
-            <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
-                <option value=''>Filter by type</option>
-                <option value='micro'>micro</option>
-                <option value='nano'>nano</option>
-                <option value='regional'>regional</option>
-                <option value='brewpub'>brewpub</option>
-                <option value='large'>large</option>
-                <option value='planning'>planning</option>
-                <option value='bar'>bar</option>
-                <option value='contract'>contract</option>
-                <option value='proprietor'>proprietor</option>
-                <option value='closed'>closed</option>
-            </select>
-            <button type='submit'>filter</button>
-            </form>
-        </div>
-
-        <div className='sort-button'>
-            <button onClick={handleSort}>Sort by Type</button>
+                </div>
+                <div className="graphics-container">
+                    <Graphics/>
+                </div>
+            </div>
         </div>
         
-        {data && (
-            <table style={{margin: 'auto'}}>
-            <thead>
-                <tr>
-                <th>Name</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((item) => (
-                <tr key={item.id}>
-                    <td>{item.name}</td>
-                    <td>{item.city}</td>
-                    <td>{item.state}</td>
-                    <td>{item.brewery_type}</td>
-                </tr>
-                ))}
-            </tbody>
-            </table>
-        )}
-        </div>
     );
 };
 
