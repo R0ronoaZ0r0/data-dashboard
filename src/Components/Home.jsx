@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Graphics from './Graphics';
+import { Link } from "react-router-dom";
+
 
 const Home = () => {
     const [data, setData] = useState(null);
@@ -123,7 +125,14 @@ const Home = () => {
                             <tbody>
                                 {data.map((item) => (
                                 <tr key={item.id}>
-                                    <td>{item.name}</td>
+                                    {/* <td>{item.name}</td> */}
+                                    <td><Link 
+                                            to={`/Info/${item.id}`}
+                                            key={item.id}
+                                            >
+                                            {item.name}
+                                        </Link>
+                                    </td>
                                     <td>{item.city}</td>
                                     <td>{item.state}</td>
                                     <td>{item.brewery_type}</td>
