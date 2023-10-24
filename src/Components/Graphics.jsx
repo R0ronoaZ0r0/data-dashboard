@@ -1,6 +1,7 @@
-import {BarChart, Bar, XAxis, YAxis, Legend} from 'recharts';
+import {BarChart, Bar, XAxis, YAxis, Legend, Tooltip} from 'recharts';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+
 
 const Graphics = () => {
 
@@ -26,12 +27,13 @@ const Graphics = () => {
 
     return (
         <div>
-          
-          <BarChart width={600} height={300} data={data} scale={{y:'log'}}>
+          <h3>Bar Chart showing the number of breweries by type.</h3>
+          <BarChart width={800} height={500} data={data}>
               <XAxis dataKey="type"  />
-              <YAxis dataKey="count" />
+              <YAxis/>
               <Legend/>
-              <Bar dataKey="count" barSize={30} fill="#8884d8"/>
+              <Bar dataKey="count" barSize={30} fill="#8884d8" />
+              <Tooltip />
           </BarChart>
         </div>
     );
