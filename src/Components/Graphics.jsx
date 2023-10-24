@@ -1,57 +1,38 @@
-import {BarChart, Bar} from 'recharts';
-
-const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-];
-
+import {BarChart, Bar, XAxis, YAxis, Legend} from 'recharts';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Graphics = () => {
+
+  const [data, setData] = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const counts = [];
+      const types = ['micro', 'nano', 'regional', 'brewpub', 'large', 'planning', 'bar', 'contract', 'proprietor', 'closed'];
+      for (const type of types) {
+        let response = await axios.get(`https://api.openbrewerydb.org/v1/breweries/meta?by_type=${type}`);
+        counts.push({type: type, count: response.data.total});
+      }
+      setData(counts);
+      console.log(counts);
+    };
+    fetchData();
+    
+  },[]);
+
+
+
     return (
         <div>
-            <BarChart width={600} height={300} data={data}>
-                <Bar dataKey="uv" fill="#8884d8"/>
-            </BarChart>
+          
+          <BarChart width={600} height={300} data={data} scale={{y:'log'}}>
+              <XAxis dataKey="type"  />
+              <YAxis dataKey="count" />
+              <Legend/>
+              <Bar dataKey="count" barSize={30} fill="#8884d8"/>
+          </BarChart>
         </div>
     );
 };
